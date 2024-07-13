@@ -7,16 +7,16 @@
 class KeyboardListener
 {
 private:
-	HHOOK keyboardHandle;
+    HHOOK keyboardHandle;
 
-    static LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
+    static LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) { return 0; }
 
 public:
-	~KeyboardListener();
+    ~KeyboardListener();
 
-	void StartListenKeyboard();
+    void StartListenKeyboard();
 
-	void StopListenKeyboard();
+    void StopListenKeyboard();
 };
 
 #endif
