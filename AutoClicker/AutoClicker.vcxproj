@@ -80,7 +80,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -96,7 +96,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -112,7 +112,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -128,7 +128,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -136,8 +136,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AutoClicker\AutoClicker.cpp" />
-    <ClCompile Include="KeyboardListener\KeyboardListener.cpp" />
-    <ClCompile Include="KeyboardListener\LowLevelKeyboardProc.cpp" />
+    <ClCompile Include="AutoClicker\Controller\Controller.cpp" />
+    <ClCompile Include="AutoClicker\Controller\KbHook\KbHook.cpp" />
+    <ClCompile Include="AutoClicker\Model\Clicker\Clicker.cpp" />
+    <ClCompile Include="AutoClicker\Model\FlagsManager\FlagsManager.cpp" />
+    <ClCompile Include="AutoClicker\Model\Model.cpp" />
+    <ClCompile Include="AutoClicker\UI\UI.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="WindowLib\Button.cpp" />
     <ClCompile Include="WindowLib\ComboBox.cpp" />
@@ -152,7 +156,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoClicker\AutoClicker.h" />
-    <ClInclude Include="KeyboardListener\KeyboardListener.h" />
+    <ClInclude Include="AutoClicker\Controller\Controller.h" />
+    <ClInclude Include="AutoClicker\Controller\KbHook\KbHook.h" />
+    <ClInclude Include="AutoClicker\Model\Clicker\Clicker.h" />
+    <ClInclude Include="AutoClicker\Model\Clicker\PerfCounter.h" />
+    <ClInclude Include="AutoClicker\Model\FlagsManager\FlagsManager.h" />
+    <ClInclude Include="AutoClicker\Model\Model.h" />
+    <ClInclude Include="AutoClicker\UI\UI.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="WindowLib\Button.h" />
     <ClInclude Include="WindowLib\CallbackManager.h" />

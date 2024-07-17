@@ -1,7 +1,5 @@
 #include "Window.h"
 
-#include <functional>
-
 WndList<Window> Window::_wnd_list;
 WndList<WndPairValue> Window::_wnd_pos_list;
 WndList<WndPairValue> Window::_wnd_size_list;
@@ -59,6 +57,9 @@ LRESULT Window::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
                 ParentResizeCallbackParams params = { nullptr, *WndSize };
                 WndSize->first = LOWORD(lParam);
                 WndSize->second = HIWORD(lParam);
+
+                /* Logs */
+                //printf("%d x %d\n", LOWORD(lParam), HIWORD(lParam));
 
                 // Run parent resize controls callbacks
                 ParentResizeCallbacksCaller(Wnd->GetButtonsList(), &params);
