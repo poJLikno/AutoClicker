@@ -80,7 +80,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -96,7 +96,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -112,7 +112,7 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -128,34 +128,54 @@
       <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>NotSet</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Button\Button.cpp" />
-    <ClCompile Include="ComboBox\ComboBox.cpp" />
-    <ClCompile Include="Edit\Edit.cpp" />
-    <ClCompile Include="KeyboardListener\KeyboardListener.cpp" />
-    <ClCompile Include="KeyboardListener\LowLevelKeyboardProc.cpp" />
-    <ClCompile Include="Label\Label.cpp" />
+    <ClCompile Include="AutoClicker\AutoClicker.cpp" />
+    <ClCompile Include="AutoClicker\Controller\Controller.cpp" />
+    <ClCompile Include="AutoClicker\Controller\KbHook\KbHook.cpp" />
+    <ClCompile Include="AutoClicker\Model\Clicker\Clicker.cpp" />
+    <ClCompile Include="AutoClicker\Model\FlagsManager\FlagsManager.cpp" />
+    <ClCompile Include="AutoClicker\Model\Model.cpp" />
+    <ClCompile Include="AutoClicker\UI\UI.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="NormalFont\NormalFont.cpp" />
-    <ClCompile Include="Window\RunMessageLoopAsync.cpp" />
-    <ClCompile Include="Window\Window.cpp" />
-    <ClCompile Include="Window\WndProc.cpp" />
+    <ClCompile Include="WindowLib\Button.cpp" />
+    <ClCompile Include="WindowLib\ComboBox.cpp" />
+    <ClCompile Include="WindowLib\Edit.cpp" />
+    <ClCompile Include="WindowLib\Label.cpp" />
+    <ClCompile Include="WindowLib\MenuBase.cpp" />
+    <ClCompile Include="WindowLib\MenuPoint.cpp" />
+    <ClCompile Include="WindowLib\NormalFont.cpp" />
+    <ClCompile Include="WindowLib\Window.cpp" />
+    <ClCompile Include="WindowLib\WndBase.cpp" />
+    <ClCompile Include="WindowLib\WndProc.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Button\Button.h" />
-    <ClInclude Include="ComboBox\ComboBox.h" />
-    <ClInclude Include="Edit\Edit.h" />
-    <ClInclude Include="KeyboardListener\KeyboardListener.h" />
-    <ClInclude Include="Label\Label.h" />
-    <ClInclude Include="NormalFont\NormalFont.h" />
+    <ClInclude Include="AutoClicker\AutoClicker.h" />
+    <ClInclude Include="AutoClicker\Controller\Controller.h" />
+    <ClInclude Include="AutoClicker\Controller\KbHook\KbHook.h" />
+    <ClInclude Include="AutoClicker\Model\Clicker\Clicker.h" />
+    <ClInclude Include="AutoClicker\Model\Clicker\PerfCounter.h" />
+    <ClInclude Include="AutoClicker\Model\FlagsManager\FlagsManager.h" />
+    <ClInclude Include="AutoClicker\Model\Model.h" />
+    <ClInclude Include="AutoClicker\UI\UI.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Window\Window.h" />
+    <ClInclude Include="WindowLib\Button.h" />
+    <ClInclude Include="WindowLib\CallbackManager.h" />
+    <ClInclude Include="WindowLib\ComboBox.h" />
+    <ClInclude Include="WindowLib\Edit.h" />
+    <ClInclude Include="WindowLib\Label.h" />
+    <ClInclude Include="WindowLib\Menu.h" />
+    <ClInclude Include="WindowLib\MenuBase.h" />
+    <ClInclude Include="WindowLib\MenuPoint.h" />
+    <ClInclude Include="WindowLib\NormalFont.h" />
+    <ClInclude Include="WindowLib\Window.h" />
+    <ClInclude Include="WindowLib\WndBase.h" />
+    <ClInclude Include="WindowLib\WndList.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="AutoClicker.rc" />
