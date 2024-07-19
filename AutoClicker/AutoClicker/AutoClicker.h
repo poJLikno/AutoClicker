@@ -6,7 +6,7 @@
 class AutoClicker {
 private:
     /* App version */
-    const char *_version = "AutoClicker v2.5";
+    const char *_version = "AutoClicker v2.6";
 
     /* UI */
     UI _ui = UI(_version);

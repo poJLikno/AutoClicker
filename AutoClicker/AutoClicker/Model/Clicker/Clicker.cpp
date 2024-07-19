@@ -5,53 +5,55 @@
 void Clicker::ClickerLoop(void *ptr) {
     Clicker *clicker = (Clicker *)ptr;
 
-    PerfCounter::Counter counter;
-    PerfCounter::Ticks millis = counter.Now();
-
-    //PerfCounter::Ticks millis_log = counter.Now();
-
     POINT point = { 0 };
 
-    while (clicker->_clicker_exist) {
-        if (clicker->GetFlag("ClickerState")) {
-            if (PerfCounter::TicksTo(counter.Now() - millis, PerfCounter::Nanoseconds) >= (long long)clicker->_duration_ns) {
-                millis = counter.Now();
+    PerfCounter::Ticks bias = 0ll;
 
-                if (clicker->GetFlag("KbClickerMode")) {
-                    keybd_event((unsigned char)clicker->_target_key_code, (unsigned char)MapVirtualKeyW((unsigned int)clicker->_target_key_code, 0), 0, 0);
-                    keybd_event((unsigned char)clicker->_target_key_code, (unsigned char)MapVirtualKeyW((unsigned int)clicker->_target_key_code, 0), KEYEVENTF_KEYUP, 0);
-                }
-                else if (clicker->_button_id == 0) {
-                    GetCursorPos(&point);
-                    mouse_event(MOUSEEVENTF_LEFTDOWN, point.x, point.y, 0, 0);
-                    mouse_event(MOUSEEVENTF_LEFTUP, point.x, point.y, 0, 0);
-                }
-                else if (clicker->_button_id == 1) {
-                    GetCursorPos(&point);
-                    mouse_event(MOUSEEVENTF_RIGHTDOWN, point.x, point.y, 0, 0);
-                    mouse_event(MOUSEEVENTF_RIGHTUP, point.x, point.y, 0, 0);
-                }
+    PerfCounter::Ticks millis = clicker->_counter.Now();
+    PerfCounter::Ticks millis_bias = clicker->_counter.Now();
 
-                /* Logs */
-                //printf("Clicker loop - %d ; %d ; %d\n", (int)clicker->_cps, clicker->_button_id, (int)(1000000000ull / PerfCounter::TicksTo(counter.Now() - millis_log, PerfCounter::Nanoseconds)));
-                //millis_log = counter.Now();
+    while (clicker->GetFlag("ClickerState")) {
+        if (clicker->_counter.Now() - millis >= clicker->_duration - bias) {
+            millis = clicker->_counter.Now();
+
+            if (clicker->GetFlag("KbClickerMode")) {
+                keybd_event((unsigned char)clicker->_target_key_code, (unsigned char)MapVirtualKeyW((unsigned int)clicker->_target_key_code, 0), 0, 0);
+                keybd_event((unsigned char)clicker->_target_key_code, (unsigned char)MapVirtualKeyW((unsigned int)clicker->_target_key_code, 0), KEYEVENTF_KEYUP, 0);
             }
+            else if (clicker->_button_id == 0) {
+                GetCursorPos(&point);
+                mouse_event(MOUSEEVENTF_LEFTDOWN, point.x, point.y, 0, 0);
+                mouse_event(MOUSEEVENTF_LEFTUP, point.x, point.y, 0, 0);
+            }
+            else if (clicker->_button_id == 1) {
+                GetCursorPos(&point);
+                mouse_event(MOUSEEVENTF_RIGHTDOWN, point.x, point.y, 0, 0);
+                mouse_event(MOUSEEVENTF_RIGHTUP, point.x, point.y, 0, 0);
+            }
+
+            /* Logs */
+            //printf("Clicker loop - %d ; %d ; %d\n", (int)clicker->_cps, clicker->_button_id, (int)(1000000000ull / PerfCounter::TicksTo(clicker->_counter.Now() - millis_bias, PerfCounter::Nanoseconds)));
+            
+            PerfCounter::Ticks control_duration = clicker->_counter.Now() - millis_bias;
+            if (control_duration > clicker->_duration) {
+                bias += (PerfCounter::Ticks)(0.97 * (double)control_duration - (double)clicker->_duration);
+            }
+            else if (control_duration < clicker->_duration) {
+                bias -= (PerfCounter::Ticks)(0.97 * (double)clicker->_duration - (double)control_duration);
+            }
+            millis_bias = clicker->_counter.Now();
         }
-        else {
-            std::this_thread::sleep_for(std::chrono::milliseconds(200));
-        }
+        std::this_thread::sleep_for(std::chrono::nanoseconds(1));
     }
 }
 
 Clicker::Clicker(UI *ui) : _ui(ui) {
     AddFlag("ClickerState");
     AddFlag("KbClickerMode");
-
-    _clicker_thread.detach();
 }
 
 Clicker::~Clicker() {
-    _clicker_exist = false;
+    this->Stop();
 }
 
 void Clicker::Start() {
@@ -60,7 +62,7 @@ void Clicker::Start() {
     _ui->_cps_edit.GetWndText(cps_str, sizeof(cps_str));
     _cps = atoi(cps_str);
 
-    _duration_ns = _cps ? 1000000000ull / _cps : 1000000000ull;
+    _duration = (PerfCounter::Ticks)(1.0 / (double)_cps * (double)PerfCounter::Frequency);
 
     /* Get button */
     if ((_button_id = _ui->_buttons_list.GetItemId()) >= 2) {
@@ -71,10 +73,17 @@ void Clicker::Start() {
     }
 
     SetFlag("ClickerState", true);
+    _clicker_thread = new std::thread(ClickerLoop, (void *)this);
 }
 
 void Clicker::Stop() {
     SetFlag("ClickerState", false);
+
+    if (_clicker_thread) {
+        _clicker_thread->join();
+        delete _clicker_thread;
+        _clicker_thread = nullptr;
+    }
 }
 
 void Clicker::Switch() {

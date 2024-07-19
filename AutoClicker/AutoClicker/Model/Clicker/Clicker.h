@@ -10,13 +10,14 @@
 
 class Clicker : public FlagsManager {
 protected:
-    bool _clicker_exist = true;
     DWORD _cps = 0;
-    unsigned long long _duration_ns = 0ull;
+    PerfCounter::Ticks _duration = 0ll;
     int _button_id = 0;
     DWORD _target_key_code = 65ul;/* A */
 
-    std::thread _clicker_thread = std::thread(ClickerLoop, (void *)this);
+    PerfCounter::Counter _counter = PerfCounter::Counter();
+
+    std::thread *_clicker_thread = nullptr;;
 
     UI *_ui = nullptr;
 
