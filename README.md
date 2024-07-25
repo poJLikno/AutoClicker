@@ -2,7 +2,7 @@
 ### The best way to raise your power in a clicker-game! ###
 
 ## Minimalistic design ##
-__*Very easy in usage!*__
+_*Very easy in usage!*_
 
 ## Main terms ##
 * **CPS** - Clicks Per Second (High clicks precision! Max cps depends on a CPU)
@@ -16,4 +16,4 @@ __*Very easy in usage!*__
 **AutoClicker** doesn't load a CPU!
 
 ## Download ##
-You can download any release __*[HERE](https://github.com/poJLikno/AutoClicker/releases)*__!
+You can download any release _*[HERE](https://github.com/poJLikno/AutoClicker/releases)*_!
